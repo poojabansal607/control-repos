@@ -7,7 +7,8 @@ forge "http://forge.puppetlabs.com"
 #mod "puppetlabs/concat",      '2.1.0'
 
 mod 'zuinnote-oraclejdk8', '1.0.1'
-
+mod 'puppetlabs-apt', '2.3.0'
+mod 'puppetlabs-stdlib', '4.15.0'
 # Modules from Git
 # Examples: https://github.com/puppetlabs/r10k/blob/master/doc/puppetfile.mkd#examples
 #mod 'apache',
