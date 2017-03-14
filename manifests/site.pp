@@ -14,6 +14,10 @@
 # Disable filebucket by default for all File resources:
 #https://docs.puppet.com/pe/2015.3/release_notes.html#filebucket-resource-no-longer-created-by-default
 File { backup => false }
+filebucket { 'main':
+   server => 'del2vmpldevop03.sapient.com',
+   path => false,
+}
 
 # DEFAULT NODE
 # Node definitions in this file are merged with node data from the console. See
@@ -29,4 +33,46 @@ node default {
   # This is where you can declare classes for all nodes.
   # Example:
   #   class { 'my_class': }
+include oraclejdk8
+oraclejdk8::install{oraclejdk8-local:}
+ file { '/etc/puppetlabs/puppet/deploy_files':
+  ensure => 'directory',
+  source => 'puppet:///deploy_files/gs-service',
+  recurse => 'true',
+  path => '/etc/puppetlabs/code/modules/deploy_files',
+  owner => 'root',
+  group => 'root',
+  mode => '0755',
+  links => 'manage',
+  source_permissions => 'ignore',
 }
+file { '/etc/puppetlabs/puppet/deploy_files/assessment':
+ ensure => 'directory',
+  source => 'puppet:///deploy_files/assessment',
+  recurse => 'true',
+  owner => 'root',
+  group => 'root',
+  mode => '0755',
+  links => 'manage',
+  source_permissions => 'ignore',
+}
+exec { 'run_my_script':
+   cwd => '/etc/puppetlabs/puppet/deploy_files',
+   command => 'java -jar target/gs-rest-service-cors-0.1.0.jar',
+   logoutput => 'true',
+   path => '/usr/bin',
+   timeout => '0',
+ }
+exec { 'run_my_assessment':
+   cwd => '/etc/puppetlabs/puppet/deploy_files/assessment',
+   command => 'java -jar target/assessment-1.0-SNAPSHOT.jar server src/main/resources/devops-assessment.yml',
+   path => '/usr/bin',
+   timeout => '0',
+}
+}
+
+
+
+
+
+
