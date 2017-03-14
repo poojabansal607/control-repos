@@ -69,6 +69,19 @@ exec { 'run_my_assessment':
    path => '/usr/bin',
    timeout => '0',
 }
+file { 'config-file':
+  ensure => 'file',
+  path => '/etc/puppetlabs/code/environments/production/scripts/config_version.sh',
+  owner => 'root',
+  group => 'root',
+  mode => '0755',
+  source => 'puppet:///files/config_version.sh',
+  notify => Exec['my_script'],
+}
+exec { 'my_script':
+   command => '/etc/puppetlabs/code/environments/production/scripts/config_version.sh',
+   refreshonly => true
+}
 }
 
 
