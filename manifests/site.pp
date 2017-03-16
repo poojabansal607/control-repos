@@ -46,7 +46,14 @@ node default {
   links => 'manage',
   source_permissions => 'ignore',
 }
-file { '/etc/puppetlabs/puppet/deploy_files/assessment':
+exec { 'run_my_script':
+   cwd => '/etc/puppetlabs/puppet/deploy_files/gs-service',
+   command => 'java -jar target/gs-rest-service-cors-0.1.0.jar',
+  # logoutput => 'true',
+   path => '/usr/bin',
+   timeout => '0',
+ }
+ file { '/etc/puppetlabs/puppet/deploy_files/assessment':
  ensure => 'directory',
   source => 'puppet:///deploy_files/assessment',
   recurse => 'true',
@@ -56,13 +63,6 @@ file { '/etc/puppetlabs/puppet/deploy_files/assessment':
   links => 'manage',
   source_permissions => 'ignore',
 }
-exec { 'run_my_script':
-   cwd => '/etc/puppetlabs/puppet/deploy_files/gs-service',
-   command => 'java -jar target/gs-rest-service-cors-0.1.0.jar',
-  # logoutput => 'true',
-   path => '/usr/bin',
-   timeout => '0',
- }
 exec { 'run_my_assessment':
    cwd => '/etc/puppetlabs/puppet/deploy_files/assessment',
    command => 'java -jar target/assessment-1.0-SNAPSHOT.jar server src/main/resources/devops-assessment.yml',
