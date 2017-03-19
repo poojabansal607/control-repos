@@ -53,6 +53,7 @@ options => ['GRANT'],
 privileges => ['ALL'],
 table => '*.*',
 user => 'root@localhost',
+password => 'root123',
 }
 }
 
