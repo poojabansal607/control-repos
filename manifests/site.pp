@@ -33,32 +33,51 @@ node del2vmpldevop03.sapient.com {
   # This is where you can declare classes for all nodes.
   # Example:
   #   class { 'my_class': }
-#include '::mysql::server'
-class { 'mysql::client': }
-
-
-class { '::mysql::server':
-  root_password    => 'strongpassword',
-  override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  
+ini_setting { 'use_cached_catalog':
+  ensure  => present,
+  path    => $settings::config,
+  section => 'agent',
+  setting => 'use_cached_catalog',
+  value   => 'true',
+}  
+#include oraclejdk8
+#oraclejdk8::install{oraclejdk8-local:}
+ file { '/etc/puppetlabs/puppet/deploy_files/gs-service':
+  ensure => 'directory',
+  source => 'puppet:///deploy_files/gs-service',
+  recurse => 'true',
+ # path => '/etc/puppetlabs/code/modules/deploy_files',
+  owner => 'root',
+  group => 'root',
+  mode => '0755',
+  links => 'manage',
+  source_permissions => 'ignore',
 }
-
-mysql::db { 'mydb':
-  user => 'admin',
-  password => 'secret',
-  host => 'del2vmpldevop03.sapient.com',
+ file { '/etc/puppetlabs/puppet/deploy_files/assessment':
+ ensure => 'directory',
+  source => 'puppet:///deploy_files/assessment',
+  recurse => 'true',
+  owner => 'root',
+  group => 'root',
+  mode => '0755',
+  links => 'manage',
+  source_permissions => 'ignore',
 }
-
-mysql_grant { 'root@localhost/mydb.*':
-ensure => 'present',
-options => ['GRANT'],
-privileges => ['ALL'],
-table => 'mydb.*',
-user => 'root@localhost',
-
+exec { 'run_my_assessment':
+   cwd => '/etc/puppetlabs/puppet/deploy_files/assessment',
+   command => 'java -jar target/assessment-1.0-SNAPSHOT.jar server src/main/resources/devops-assessment.yml',
+   path => '/usr/bin',
+   timeout => '0',
 }
+exec { 'run_my_script':
+   cwd => '/etc/puppetlabs/puppet/deploy_files/gs-service',
+   command => 'java -jar target/gs-rest-service-cors-0.1.0.jar',
+  # logoutput => 'true',
+   path => '/usr/bin',
+   timeout => '0',
+ }
 }
-
-
 
 
 
