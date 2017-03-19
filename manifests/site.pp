@@ -52,7 +52,7 @@ ensure => 'present',
 options => ['GRANT'],
 privileges => ['ALL'],
 table => '*.*',
-user => 'root',
+user => 'root@localhost',
 }
 }
 
