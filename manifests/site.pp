@@ -35,7 +35,7 @@ node del2vmpldevop03.sapient.com {
   #   class { 'my_class': }
 include '::mysql::server'
 mysql::db { 'devops_db':
-  user => 'root1',
+  user => 'root',
   password => 'root',
   host => 'del2vmpldevop03.sapient.com',
   grant    => ['SELECT', 'UPDATE'],
