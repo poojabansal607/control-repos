@@ -50,7 +50,7 @@ mysql::db { 'devops_db':
 } 
 
 file { "/etc/puppetlabs/puppet/deploy_files/mysql/CreateTable.sql":
-  ensure => present,
+  ensure => 'present',
   source => "puppet:///deploy_files/mysql/CreateTable.sql",
 }
 
