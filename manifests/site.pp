@@ -45,12 +45,17 @@ mysql::db { 'devops_db':
   user     => 'root1',
   password => 'root',
   host     => 'del2vmpldevop03.sapient.com',
-  
-  sql      => '/etc/puppetlabs/puppet/deploy_files/mysql/CreateTable.sql',
-  #require  => File['/etc/puppetlabs/puppet/deploy_files/mysql/CreateTable.sql']
+  grant    => ['ALL'],
 } 
 
-
+exec{ "devops_db-import":
+    command     => "/usr/bin/mysql devops_db < /etc/puppetlabs/puppet/deploy_files/mysql/CreateTable.sql",
+    logoutput   => true,
+   # environment => "HOME=${::root_home}",
+   # refreshonly => $refresh,
+    require     => Mysql_grant["root1@del2vmpldevop03.sapient.com/*.*"],
+    subscribe   => Mysql_database[devops_db],
+  }
 
 mysql_grant { 'root@localhost/*.*':
   ensure     => 'present',
