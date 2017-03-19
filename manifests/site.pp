@@ -34,8 +34,8 @@ node del2vmpldevop03.sapient.com {
   # Example:
   #   class { 'my_class': }
 #include '::mysql::server'
-class { ‘mysql::client’:}
-}
+class { ‘mysql::client’: }
+
 
 class { '::mysql::server':
   root_password    => 'strongpassword',
