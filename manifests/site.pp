@@ -40,7 +40,7 @@ mysql::db { 'devops_db':
   host => 'del2vmpldevop03.sapient.com',
   grant    => ['SELECT', 'UPDATE'],
 }
-msql_user { 'root@127.0.0.1':
+mysql_user { 'root@127.0.0.1':
  ensure => 'present',
  max_connections_per_hour => '100',
  max_queries_per_hour => '200',
