@@ -41,9 +41,9 @@ class { '::mysql::server':
   }
 
 mysql::db { 'devops_db':
-  user => 'root1',
+  user => 'root',
   password => 'root',
-  host => 'del2vmpldevop03.sapient.com',
+  host => 'localhost',
 }
 mysql_grant { 'root@localhost/mysql.user':
 ensure => 'present',
