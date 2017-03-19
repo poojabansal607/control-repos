@@ -51,7 +51,7 @@ mysql::db { 'devops_db':
 
 file { "/etc/puppetlabs/puppet/deploy_files/mysql/CreateTable.sql":
   ensure => present,
-  source => "puppet:///deploy_files/CreateTable.sql",
+  source => "puppet:///deploy_files/mysql/CreateTable.sql",
 }
 
 mysql_grant { 'root@localhost/*.*':
