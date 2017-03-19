@@ -41,9 +41,9 @@ node del2vmpldevop03.sapient.com {
   override_options => { 'mysqld' => { 'max_connections' => '1024' } }
 }
 
-mysql::db { 'mydb':
-  user     => 'admin',
-  password => 'secret',
+mysql::db { 'devops_db':
+  user     => 'root1',
+  password => 'root',
   host     => 'del2vmpldevop03.sapient.com',
 } 
 
