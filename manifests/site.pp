@@ -46,10 +46,6 @@ mysql::db { 'devops_db':
   host => 'localhost',
 }
 
-mysql_user { 'root@localhost':
-    ensure  => 'present',
-    password_hash => 'mysql_password',
-  }
 mysql_grant { 'root@localhost/*.*':
 ensure => 'present',
 options => ['GRANT'],
