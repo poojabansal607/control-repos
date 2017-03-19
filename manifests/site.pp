@@ -33,24 +33,27 @@ node del2vmpldevop03.sapient.com {
   # This is where you can declare classes for all nodes.
   # Example:
   #   class { 'my_class': }
-include '::mysql::server'
-
-mysql::db { 'devops_db':
-  user => 'root',
-  password => 'root',
-  host => 'localhost',
+#include '::mysql::server'
+class { ‘mysql::client’:}
 }
 
-mysql_grant { 'root@localhost/*.*':
+class { '::mysql::server':
+  root_password    => 'strongpassword',
+  override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+}
+
+mysql::db { 'mydb':
+  user => 'admin',
+  password => 'secret',
+  host => 'del2vmpldevop03.sapient.com',
+}
+
+mysql_grant { 'root@localhost/mydb.*':
 ensure => 'present',
 options => ['GRANT'],
 privileges => ['ALL'],
-table => '*.*',
+table => 'mydb.*',
 user => 'root@localhost',
-require    => [
-        Mysql_database[devops_db],
-        Mysql_user["root@localhost"],
-      ],
 
 }
 }
