@@ -35,17 +35,16 @@ node del2vmpldevop03.sapient.com {
   #   class { 'my_class': }
 include '::mysql::server'
 mysql::db { 'devops_db':
-  user => 'root',
+  user => 'root1',
   password => 'root',
   host => 'del2vmpldevop03.sapient.com',
-  grant    => ['SELECT', 'UPDATE'],
 }
-mysql_user { 'root@127.0.0.1':
+mysql_user { 'root@localhost':
  ensure => 'present',
- max_connections_per_hour => '100',
- max_queries_per_hour => '200',
- max_updates_per_hour => '200',
- max_user_connections => '80',
+ max_connections_per_hour => '60',
+ max_queries_per_hour => '120',
+ max_updates_per_hour => '120',
+ max_user_connections => '10',
  }
 mysql_grant { 'root@localhost/*.*':
 ensure => 'present',
@@ -53,7 +52,6 @@ options => ['GRANT'],
 privileges => ['ALL'],
 table => '*.*',
 user => 'root@localhost',
-password => 'root123',
 }
 }
 
