@@ -37,7 +37,8 @@ include '::mysql::server'
 mysql::db { 'devops_db':
   user => 'root',
   password => 'root123',
-  host => 'del2vmpldevop03.sapient.com',
+  host => 'localhost',
+  grant    => ['SELECT', 'UPDATE'],
 }
 
 
