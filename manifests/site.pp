@@ -33,7 +33,12 @@ node del2vmpldevop03.sapient.com {
   # This is where you can declare classes for all nodes.
   # Example:
   #   class { 'my_class': }
-include '::mysql::server'
+#include '::mysql::server'
+class { '::mysql::server':
+  root_password => 'root123',
+  override_options => { 'mysqld' => { 'max_connections' => '1024' }} 
+  }
+
 mysql::db { 'devops_db':
   user => 'root1',
   password => 'root',
