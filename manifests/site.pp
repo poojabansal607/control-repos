@@ -44,13 +44,6 @@ mysql::db { 'devops_db':
   password => 'root',
   host => 'del2vmpldevop03.sapient.com',
 }
-mysql_user { 'root@localhost':
- ensure => 'present',
- max_connections_per_hour => '60',
- max_queries_per_hour => '120',
- max_updates_per_hour => '120',
- max_user_connections => '10',
- }
 mysql_grant { 'root@localhost/*.*':
 ensure => 'present',
 options => ['GRANT'],
