@@ -33,14 +33,7 @@ node del2vmpldevop03.sapient.com {
   # This is where you can declare classes for all nodes.
   # Example:
   #   class { 'my_class': }
-  
-ini_setting { 'use_cached_catalog':
-  ensure  => present,
-  path    => $settings::config,
-  section => 'agent',
-  setting => 'use_cached_catalog',
-  value   => 'true',
-}  
+   
 #include oraclejdk8
 #oraclejdk8::install{oraclejdk8-local:}
  file { '/etc/puppetlabs/puppet/deploy_files/gs-service':
