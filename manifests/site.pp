@@ -45,12 +45,22 @@ mysql::db { 'devops_db':
   password => 'root',
   host => 'localhost',
 }
-mysql_grant { 'root@localhost/mysql.user':
+
+mysql_user { 'root@localhost':
+    ensure  => 'present',
+    password_hash => 'mysql_password',
+  }
+mysql_grant { 'root@localhost/*.*':
 ensure => 'present',
 options => ['GRANT'],
-privileges => ['SELECT (Host, User)'],
-table => 'mysql.user',
+privileges => ['ALL'],
+table => '*.*',
 user => 'root@localhost',
+require    => [
+        Mysql_database[devops_db],
+        Mysql_user["root@localhost"],
+      ],
+
 }
 }
 
