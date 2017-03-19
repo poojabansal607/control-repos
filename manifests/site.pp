@@ -34,6 +34,7 @@ node del2vmpldevop03.sapient.com {
   # Example:
   #   class { 'my_class': }
 #include '::mysql::server'
+
 class { '::mysql::server':
   root_password => 'root123',
   override_options => { 'mysqld' => { 'max_connections' => '1024' }} 
@@ -44,11 +45,11 @@ mysql::db { 'devops_db':
   password => 'root',
   host => 'del2vmpldevop03.sapient.com',
 }
-mysql_grant { 'root@localhost/*.*':
+mysql_grant { 'root@localhost/mysql.user':
 ensure => 'present',
 options => ['GRANT'],
 privileges => ['SELECT (Host, User)'],
-table => '*.*',
+table => 'mysql.user',
 user => 'root@localhost',
 }
 }
