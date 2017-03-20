@@ -39,7 +39,7 @@ node del2vmpldevop03.sapient.com {
   class { '::mysql::server':
   root_password    => 'strongpassword',
   
-  override_options => { 'mysqld' => { 'bind-address' => '127.0.0.1' , 'max_connections' => '1024' } }
+  override_options => { 'mysqld' => { 'bind-address' => '0.0.0.0'} }
 }
 
 mysql::db { 'devops_db':
@@ -60,12 +60,12 @@ file { "/etc/puppetlabs/puppet/deploy_files/mysql/InsertData.sql":
   source => "puppet:///deploy_files/mysql/InsertData.sql",
 }
 
-mysql_grant { 'root@localhost/*.*':
+mysql_grant { 'root@del2vmpldevop03.sapient.com/*.*':
   ensure     => 'present',
   options    => ['GRANT'],
   privileges => ['ALL'],
   table      => '*.*',
-  user       => 'root@localhost',
+  user       => 'root@del2vmpldevop03.sapient.com',
 }
 
 #include oraclejdk8
