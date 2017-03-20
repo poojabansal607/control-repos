@@ -59,7 +59,7 @@ file { "/etc/puppetlabs/puppet/deploy_files/mysql/InsertData.sql":
   source => "puppet:///deploy_files/mysql/InsertData.sql",
 }
 
-mysql_grant { 'root1@localhost/*.*':
+mysql_grant { 'root@localhost/*.*':
   ensure     => 'present',
   options    => ['GRANT'],
   privileges => ['ALL'],
