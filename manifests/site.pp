@@ -34,12 +34,12 @@ node del2vmpldevop03.sapient.com {
   # Example:
   #   class { 'my_class': }
 
- # class { 'mysql::client':}
+  class { 'mysql::client':}
   
-  #class { '::mysql::server':
-  #root_password    => 'strongpassword',
-  #override_options => { 'mysqld' => { 'max_connections' => '1024' } }
-#}
+  class { '::mysql::server':
+  root_password    => 'strongpassword',
+  override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+}
 
 mysql::db { 'devops_db':
   user     => 'root',
