@@ -42,8 +42,8 @@ node del2vmpldevop03.sapient.com {
 }
 
 mysql::db { 'devops_db':
-  user     => 'root1',
-  password => 'root',
+  user     => 'root',
+  password => 'strongpassword',
   host     => 'del2vmpldevop03.sapient.com',
   sql      => ['/etc/puppetlabs/puppet/deploy_files/mysql/CreateTable.sql','/etc/puppetlabs/puppet/deploy_files/mysql/InsertData.sql'],
   require  => File['/etc/puppetlabs/puppet/deploy_files/mysql/CreateTable.sql','/etc/puppetlabs/puppet/deploy_files/mysql/InsertData.sql']
@@ -59,12 +59,12 @@ file { "/etc/puppetlabs/puppet/deploy_files/mysql/InsertData.sql":
   source => "puppet:///deploy_files/mysql/InsertData.sql",
 }
 
-mysql_grant { 'root1@del2vmpldevop03.sapient.com/*.*':
+mysql_grant { 'root1@localhost/*.*':
   ensure     => 'present',
   options    => ['GRANT'],
   privileges => ['ALL'],
   table      => '*.*',
-  user       => 'root1@del2vmpldevop03.sapient.com',
+  user       => 'root@localhost',
 }
 
 #include oraclejdk8
