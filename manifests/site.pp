@@ -45,7 +45,7 @@ mysql::db { 'devops_db':
   user     => 'root1',
   password => 'root',
   host     => 'del2vmpldevop03.sapient.com',
-  sql      => '/etc/puppetlabs/puppet/deploy_files/mysql/CreateTable.sql','/etc/puppetlabs/puppet/deploy_files/mysql/InsertData.sql',
+  sql      => '/etc/puppetlabs/puppet/deploy_files/mysql/CreateTable.sql,/etc/puppetlabs/puppet/deploy_files/mysql/InsertData.sql',
   require  => File['/etc/puppetlabs/puppet/deploy_files/mysql/CreateTable.sql','/etc/puppetlabs/puppet/deploy_files/mysql/InsertData.sql']
 }
 
