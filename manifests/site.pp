@@ -34,12 +34,12 @@ node del2vmpldevop03.sapient.com {
   # Example:
   #   class { 'my_class': }
 
-  class { 'mysql::client':}
+ # class { 'mysql::client':}
   
-  class { '::mysql::server':
-  root_password    => 'strongpassword',
-  override_options => { 'mysqld' => { 'max_connections' => '1024' } }
-}
+  #class { '::mysql::server':
+  #root_password    => 'strongpassword',
+  #override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+#}
 
 mysql::db { 'devops_db':
   user     => 'root',
@@ -59,12 +59,12 @@ file { "/etc/puppetlabs/puppet/deploy_files/mysql/InsertData.sql":
   source => "puppet:///deploy_files/mysql/InsertData.sql",
 }
 
-mysql_grant { 'root@127.0.0.1/*.*':
+mysql_grant { 'root@del2vmpldevop03.sapient.com/*.*':
   ensure     => 'present',
   options    => ['GRANT'],
   privileges => ['ALL'],
   table      => '*.*',
-  user       => 'root@127.0.0.1',
+  user       => 'root@del2vmpldevop03.sapient.com',
 }
 
 #include oraclejdk8
