@@ -59,12 +59,12 @@ file { "/etc/puppetlabs/puppet/deploy_files/mysql/InsertData.sql":
   source => "puppet:///deploy_files/mysql/InsertData.sql",
 }
 
-mysql_grant { 'root@del2vmpldevop03.sapient.com/*.*':
+mysql_grant { 'root@127.0.0.1/*.*':
   ensure     => 'present',
   options    => ['GRANT'],
   privileges => ['ALL'],
   table      => '*.*',
-  user       => 'root@del2vmpldevop03.sapient.com',
+  user       => 'root@127.0.0.1',
 }
 
 #include oraclejdk8
