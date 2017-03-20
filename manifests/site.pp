@@ -38,7 +38,8 @@ node del2vmpldevop03.sapient.com {
   
   class { '::mysql::server':
   root_password    => 'strongpassword',
-  override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  
+  override_options => { 'mysqld' => { 'bind-address' => 'del2vmpldevop03.sapient.com' , 'max_connections' => '1024' } }
 }
 
 mysql::db { 'devops_db':
