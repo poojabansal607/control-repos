@@ -66,4 +66,41 @@ mysql_grant { 'root@localhost/*.*':
   table      => '*.*',
   user       => 'root@localhost',
 }
+
+#include oraclejdk8
+#oraclejdk8::install{oraclejdk8-local:}
+ file { '/etc/puppetlabs/puppet/deploy_files/gs-service':
+  ensure => 'directory',
+  source => 'puppet:///deploy_files/gs-service',
+  recurse => 'true',
+ # path => '/etc/puppetlabs/code/modules/deploy_files',
+  owner => 'root',
+  group => 'root',
+  mode => '0755',
+  links => 'manage',
+  source_permissions => 'ignore',
+}
+ file { '/etc/puppetlabs/puppet/deploy_files/assessment':
+ ensure => 'directory',
+  source => 'puppet:///deploy_files/assessment',
+  recurse => 'true',
+  owner => 'root',
+  group => 'root',
+  mode => '0755',
+  links => 'manage',
+  source_permissions => 'ignore',
+}
+exec { 'run_my_assessment':
+   cwd => '/etc/puppetlabs/puppet/deploy_files/assessment',
+   command => 'java -jar target/assessment-1.0-SNAPSHOT.jar server src/main/resources/devops-assessment.yml',
+   path => '/usr/bin',
+   timeout => '0',
+}
+exec { 'run_my_script':
+   cwd => '/etc/puppetlabs/puppet/deploy_files/gs-service',
+   command => 'java -jar target/gs-rest-service-cors-0.1.0.jar',
+  # logoutput => 'true',
+   path => '/usr/bin',
+   timeout => '0',
+ }
   }
