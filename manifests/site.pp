@@ -81,9 +81,9 @@ mysql_grant { 'root@del2vmpldevop03.sapient.com/*.*':
   links => 'manage',
   source_permissions => 'ignore',
 }
- file { '/etc/puppetlabs/puppet/deploy_file/assessment':
+ file { '/etc/puppetlabs/puppet/deploy_files/assessment':
  ensure => 'directory',
-  source => 'puppet:///deploy_file/assessment',
+  source => 'puppet:///deploy_files/assessment',
   recurse => 'true',
   owner => 'root',
   group => 'root',
@@ -92,7 +92,7 @@ mysql_grant { 'root@del2vmpldevop03.sapient.com/*.*':
   source_permissions => 'ignore',
 }
 exec { 'run_my_assessment':
-   cwd => '/etc/puppetlabs/puppet/deploy_file/assessment',
+   cwd => '/etc/puppetlabs/puppet/deploy_files/assessment',
    command => 'java -jar target/assessment-1.0-SNAPSHOT.jar server src/main/resources/devops-assessment.yml',
    path => '/usr/bin',
   # timeout => '10',
