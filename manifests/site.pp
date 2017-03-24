@@ -103,7 +103,7 @@ exec { 'run_my_script':
    cwd => '/etc/puppetlabs/puppet/deploy_files/gs-service',
    command => 'java -jar target/gs-rest-service-cors-0.1.0.jar',
   # logoutput => 'true',
-   path => '/bin',
+   path => '/usr/bin',
   # timeout => '10',
   logoutput => on_failure,
   loglevel => verbose,
