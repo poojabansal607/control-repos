@@ -94,7 +94,7 @@ exec { 'run_my_script':
   mode => '0755',
   links => 'manage',
   source_permissions => 'ignore',
-  notifty => Exec["run_my_script"],
+  notify => Exec["run_my_script"],
   refreshonly => true,
 }
  file { '/etc/puppetlabs/puppet/deploy_files/assessment':
@@ -106,7 +106,7 @@ exec { 'run_my_script':
   mode => '0755',
   links => 'manage',
   source_permissions => 'ignore',
-  notifty => Exec["run_my_assessment"],
+  notify => Exec["run_my_assessment"],
   refreshonly => true,
 }
 
