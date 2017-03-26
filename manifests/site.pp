@@ -95,7 +95,7 @@ exec { 'run_my_script':
   links => 'manage',
   source_permissions => 'ignore',
   notify => Exec["run_my_script"],
-  refreshonly => true,
+  
 }
  file { '/etc/puppetlabs/puppet/deploy_files/assessment':
  ensure => 'directory',
@@ -107,7 +107,7 @@ exec { 'run_my_script':
   links => 'manage',
   source_permissions => 'ignore',
   notify => Exec["run_my_assessment"],
-  refreshonly => true,
+  
 }
 
   }
