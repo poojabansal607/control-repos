@@ -72,13 +72,13 @@ mysql_grant { 'root@del2vmpldevop03.sapient.com/*.*':
 #oraclejdk8::install{oraclejdk8-local:}
 exec { 'run_my_assessment':
    cwd => '/etc/puppetlabs/puppet/deploy_files/assessment',
-   command => 'nohup java -jar target/assessment-1.0-SNAPSHOT.jar server src/main/resources/devops-assessment.yml &',
+   command => 'nohup java -jar target/assessment-1.0-SNAPSHOT.jar server src/main/resources/devops-assessment.yml',
    path => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:',
    timeout => '0',
 }
 exec { 'run_my_script':
    cwd => '/etc/puppetlabs/puppet/deploy_files/gs-service',
-   command => 'nohup java -jar target/gs-rest-service-cors-0.1.0.jar &',
+   command => 'kill -9 $(ps | grep "gs-rest-service" | grep -v grep | awk '{ print $1 }') && nohup java -jar target/gs-rest-service-cors-0.1.0.jar &',
   # logoutput => 'true',
    path => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:',
    timeout => '0',
