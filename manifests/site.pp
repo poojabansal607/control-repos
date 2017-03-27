@@ -78,7 +78,7 @@ exec { 'run_my_assessment':
 }
 exec { 'run_my_script':
    cwd => '/etc/puppetlabs/puppet/deploy_files/gs-service',
-   command => 'kill -9 $(ps | grep "gs-rest-service" | grep -v grep | awk '{ print $1 }') && nohup java -jar target/gs-rest-service-cors-0.1.0.jar &',
+   command => 'ps -ef | grep assessment | grep -v grep | xargs kill && nohup java -jar target/gs-rest-service-cors-0.1.0.jar &',
   # logoutput => 'true',
    path => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:',
    timeout => '0',
