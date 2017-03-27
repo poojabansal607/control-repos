@@ -73,14 +73,14 @@ mysql_grant { 'root@del2vmpldevop03.sapient.com/*.*':
 exec { 'run_my_assessment':
    cwd => '/etc/puppetlabs/puppet/deploy_files/assessment',
    #command => 'nohup java -jar target/assessment-1.0-SNAPSHOT.jar server src/main/resources/devops-assessment.yml',
-   command => ' ps -ef | grep assessment | awk '{print $2}' | grep -v 'grep' | xargs kill',
+   command => 'ps -ef | grep assessment | awk "{print $2}" | grep -v 'grep' | xargs kill',
    path => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:',
    timeout => '0',
 }
 exec { 'run_my_script':
    cwd => '/etc/puppetlabs/puppet/deploy_files/gs-service',
   # command => 'ps -ef | grep gs-rest-service | grep -v grep | xargs kill && nohup java -jar target/gs-rest-service-cors-0.1.0.jar &',
-    command => ' ps -ef | grep gs-rest-service | awk '{print $2}' | grep -v 'grep' | xargs kill',
+    command => 'ps -ef | grep gs-rest-service | awk '{print $2}' | grep -v 'grep' | xargs kill',
   # logoutput => 'true',
    path => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:',
    timeout => '0',
