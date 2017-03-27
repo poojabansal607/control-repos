@@ -72,19 +72,18 @@ mysql_grant { 'root@del2vmpldevop03.sapient.com/*.*':
 #oraclejdk8::install{oraclejdk8-local:}
 exec { 'run_my_assessment':
    cwd => '/etc/puppetlabs/puppet/deploy_files/assessment',
-   command => 'java -jar target/assessment-1.0-SNAPSHOT.jar server src/main/resources/devops-assessment.yml',
+   command => 'nohup java -jar target/assessment-1.0-SNAPSHOT.jar server src/main/resources/devops-assessment.yml &',
    path => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:',
    timeout => '0',
-   
 }
 exec { 'run_my_script':
    cwd => '/etc/puppetlabs/puppet/deploy_files/gs-service',
-   command => 'java -jar target/gs-rest-service-cors-0.1.0.jar',
+   command => 'nohup java -jar target/gs-rest-service-cors-0.1.0.jar &',
   # logoutput => 'true',
    path => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:',
    timeout => '0',
  }
- file { '/etc/puppetlabs/puppet/deploy_files/gs-service':
+file { '/etc/puppetlabs/puppet/deploy_files/gs-service':
   ensure => 'directory',
   source => 'puppet:///deploy_files/gs-service',
   recurse => 'true',
@@ -94,8 +93,6 @@ exec { 'run_my_script':
   mode => '0755',
   links => 'manage',
   source_permissions => 'ignore',
-  notify => Exec["run_my_script"],
-  
 }
  file { '/etc/puppetlabs/puppet/deploy_files/assessment':
  ensure => 'directory',
@@ -106,8 +103,6 @@ exec { 'run_my_script':
   mode => '0755',
   links => 'manage',
   source_permissions => 'ignore',
-  notify => Exec["run_my_assessment"],
-  
 }
 
   }
